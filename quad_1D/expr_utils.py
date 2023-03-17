@@ -32,7 +32,8 @@ def feedback_loop(params,
                   secondary_controllers=None, # list of comparison controllers
                   online_learning=False,
                   fig_count=0,
-                  plot=True):
+                  plot=True,
+                  input_bound: float=None):
     """ Run a feedback loop.
 
     Primary controller is used to determine the input u to be applied to the system.
@@ -109,6 +110,8 @@ def feedback_loop(params,
             print("%s INFEASIBLE with statues" % (primary_controller.name))
             break
         # step the dynamics
+        if input_bound is not None:
+            u = np.clip(u, -input_bound, input_bound)
         z, v_meas = true_dynamics(z, u)
         if any(np.isnan(z)):
             infeasible = True

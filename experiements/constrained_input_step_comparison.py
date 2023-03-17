@@ -24,8 +24,8 @@ config = { 'seed': 42,
            'T': 10.0,
            'T_test': 10.0,
            'input_bound': 10.0/180.0*np.pi,
-           #'state_bound': {'h': np.array([[1.0, 0, 0]]).T, 'b': 0.51, 'phi_p': 5.0}
-           'state_bound': None
+           'state_bound': {'h': np.array([[1.0, 0, 0]]).T, 'b': 0.51, 'phi_p': 5.0}
+           #'state_bound': None
             }
 quad_config = {'thrust': 10,
                'tau': 0.2,
@@ -48,8 +48,8 @@ fmpc_config = {'horizon': 100, #int(1/config['dt']),
               'q_mpc': [50.0, 0.1, 0.1],
               'r_mpc': [0.1],
               'solver': 'ipopt',
-               #'lower_bounds': {'z0': -10.0},
-               #'upper_bounds': {'z0': config['state_bound']['b']}
+              'lower_bounds': {'z0': -10.0},
+              'upper_bounds': {'z0': config['state_bound']['b']}
 }
 socp_config = {'d_weight': 0,
                'beta': 2.0}

@@ -41,7 +41,8 @@ class Experiment:
                 secondary_controllers=None, # No comparison
                 online_learning=False,
                 fig_count=fig_count,
-                plot=plot_run
+                plot=plot_run,
+                input_bound=self.config.input_bound
             )
             self.results_dict[ctrl.name] = data
         save_name = os.path.join(self.config.output_dir, 'data.npz')
