@@ -1,0 +1,92 @@
+T: 10.0
+T_test: 5.0
+dt: 0.01
+fmpc:
+  horizon: 100
+  q_mpc:
+  - 50.0
+  - 15.0
+  - 5.0
+  r_mpc:
+  - 0.1
+  solver: ipopt
+gp_v_from_u:
+  N: 1000
+  amp: 0.2
+  lr: 0.1
+  n_train: 500
+  omegalist:
+  - 0.3
+  - 0.5
+  - 0.7
+  - 0.9
+  output_dir: null
+  sig: 0.0001
+gpmpc:
+  amp: 0.2
+  gp_output_dir: null
+  input_mask:
+  - 1
+  - 2
+  - 3
+  lr:
+  - 0.05
+  - 0.05
+  - 0.05
+  mpc_prior:
+    horizon: 100
+    q_mpc:
+    - 10.0
+    - 0.1
+    - 0.1
+    r_mpc:
+    - 0.1
+    solver: ipopt
+  n_train:
+  - 2000
+  - 2000
+  - 2000
+  noise:
+    mean:
+    - 0.0
+    - 0.0
+    - 0.0
+    std:
+    - 0.0001
+    - 0.0001
+    - 0.0001
+  num_samples: 1000
+  omegalist:
+  - 0.3
+  - 0.5
+  - 0.7
+  - 0.9
+  pred_kern_size: 200
+  sig: 0.0001
+  target_mask:
+  - 1
+  - 2
+input_bound: 0.7853981633974483
+output_dir: ./results/gp_training/seed42_Mar-08-22-08-32_5715c3f
+quad:
+  dt: 0.01
+  gamma: 3.0
+  tau: 0.2
+  thrust: 10
+quad_prior:
+  dt: 0.01
+  gamma: 0.0
+  tau: 0.15
+  thrust: 7
+seed: 42
+socp:
+  beta: 2.0
+  d_weight: 0
+tag: gp_training
+test_params:
+  Amp: 0.2
+  N: 500
+  dt: 0.01
+  m: 1
+  n: 3
+  omega: 0.6

@@ -1,0 +1,56 @@
+#########################################
+#      Training GP dimension 1         #
+#########################################
+Train iterations: 2000
+Learning Rate:: 0.05
+Iter 1/2000 - MLL trian Loss: 0.764, Posterior Test Loss: 0.745
+Iter 101/2000 - MLL trian Loss: -1.698, Posterior Test Loss: -1.710
+Iter 201/2000 - MLL trian Loss: -3.413, Posterior Test Loss: -3.435
+Iter 301/2000 - MLL trian Loss: -3.599, Posterior Test Loss: -3.620
+Iter 401/2000 - MLL trian Loss: -3.631, Posterior Test Loss: -3.651
+Iter 501/2000 - MLL trian Loss: -3.643, Posterior Test Loss: -3.663
+Iter 601/2000 - MLL trian Loss: -3.650, Posterior Test Loss: -3.669
+Iter 701/2000 - MLL trian Loss: -3.654, Posterior Test Loss: -3.673
+Iter 801/2000 - MLL trian Loss: -3.656, Posterior Test Loss: -3.675
+Iter 901/2000 - MLL trian Loss: -3.658, Posterior Test Loss: -3.677
+Iter 1001/2000 - MLL trian Loss: -3.660, Posterior Test Loss: -3.678
+Iter 1101/2000 - MLL trian Loss: -3.661, Posterior Test Loss: -3.679
+Iter 1201/2000 - MLL trian Loss: -3.662, Posterior Test Loss: -3.680
+Iter 1301/2000 - MLL trian Loss: -3.662, Posterior Test Loss: -3.680
+Iter 1401/2000 - MLL trian Loss: -3.663, Posterior Test Loss: -3.681
+Iter 1501/2000 - MLL trian Loss: -3.663, Posterior Test Loss: -3.681
+Iter 1601/2000 - MLL trian Loss: -3.664, Posterior Test Loss: -3.681
+Iter 1701/2000 - MLL trian Loss: -3.664, Posterior Test Loss: -3.682
+Iter 1801/2000 - MLL trian Loss: -3.664, Posterior Test Loss: -3.682
+Iter 1901/2000 - MLL trian Loss: -3.664, Posterior Test Loss: -3.682
+Training Complete
+Lowest epoch: 1997
+Lowest Loss: tensor(-3.6649, device='cuda:0', dtype=torch.float64, grad_fn=<NegBackward0>)
+#########################################
+#      Training GP dimension 2         #
+#########################################
+Train iterations: 2000
+Learning Rate:: 0.05
+Iter 1/2000 - MLL trian Loss: 0.767, Posterior Test Loss: 0.746
+Iter 101/2000 - MLL trian Loss: -1.645, Posterior Test Loss: -1.672
+Iter 201/2000 - MLL trian Loss: -3.283, Posterior Test Loss: nan
+Iter 301/2000 - MLL trian Loss: -3.463, Posterior Test Loss: nan
+Iter 401/2000 - MLL trian Loss: -3.499, Posterior Test Loss: nan
+Iter 501/2000 - MLL trian Loss: -3.504, Posterior Test Loss: nan
+Iter 601/2000 - MLL trian Loss: -3.515, Posterior Test Loss: nan
+Iter 701/2000 - MLL trian Loss: -3.491, Posterior Test Loss: nan
+Iter 801/2000 - MLL trian Loss: -3.511, Posterior Test Loss: nan
+Iter 901/2000 - MLL trian Loss: -3.510, Posterior Test Loss: nan
+Iter 1001/2000 - MLL trian Loss: -3.508, Posterior Test Loss: nan
+Iter 1101/2000 - MLL trian Loss: -3.519, Posterior Test Loss: nan
+Iter 1201/2000 - MLL trian Loss: -3.520, Posterior Test Loss: nan
+Iter 1301/2000 - MLL trian Loss: -3.514, Posterior Test Loss: nan
+Iter 1401/2000 - MLL trian Loss: -3.522, Posterior Test Loss: nan
+Iter 1501/2000 - MLL trian Loss: -3.517, Posterior Test Loss: nan
+Iter 1601/2000 - MLL trian Loss: -3.519, Posterior Test Loss: nan
+Iter 1701/2000 - MLL trian Loss: -3.502, Posterior Test Loss: nan
+Iter 1801/2000 - MLL trian Loss: -3.517, Posterior Test Loss: nan
+Iter 1901/2000 - MLL trian Loss: -3.514, Posterior Test Loss: nan
+Training Complete
+Lowest epoch: 1513
+Lowest Loss: tensor(-3.5313, device='cuda:0', dtype=torch.float64, grad_fn=<NegBackward0>)
