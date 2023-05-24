@@ -7,7 +7,7 @@ from copy import deepcopy
 from functools import partial
 
 from utils.dir_utils import set_dir_from_config
-from experiements.experiments import train_gp_v_from_u, train_gpmpc_LHS, Experiment
+from experiments.experiments import train_gp_v_from_u, train_gpmpc_LHS, Experiment
 from quad_1D.quad_1d import Quad1D
 from controllers.mpc import MPC
 from controllers.fmpc import FMPC

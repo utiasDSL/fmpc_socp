@@ -138,7 +138,7 @@ if __name__ == "__main__":
     colors['DLQR'] = 'brown'
     labels['DLQR'] = 'DLQR Known'
     make_tracking_plot(input_con_step_dir, colors, input_con_step_name, labels=labels, con=None, paper_dir=paper_fig_dir)
-    chat_dir = '/home/ahall/Documents/UofT/code/fmpc_socp/experiements/results/response_1-8/saved/seed42_Apr-28-11-25-06_c12bb4c'
+    chat_dir = '/experiments/results/response_1-8/saved/seed42_Apr-28-11-25-06_c12bb4c'
     chat_name = 'chatter.pdf'
     ctrls = ['DLQR+SOCP', 'FMPC+SOCP']
     make_input_plot(chat_dir, colors, chat_name, labels=labels, con=30, paper_dir=paper_fig_dir)

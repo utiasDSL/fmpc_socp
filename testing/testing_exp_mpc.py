@@ -2,7 +2,7 @@ import munch
 from quad_1D.quad_1d import Quad1D
 from controllers.mpc import MPC
 from controllers.fmpc import FMPC
-from experiements.experiments import Experiment
+from experiments.experiments import Experiment
 
 # Model Parameters
 dt = 0.02 # Discretization of simulation
