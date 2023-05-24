@@ -147,7 +147,7 @@ class DiscreteSOCPFilter:
         self.X.value = x_init
         self.prob.solve(solver='MOSEK', warm_start=True, verbose=True) # SCS was used in paper
         if 'optimal' in self.prob.status:
-            return self.X.value[0], self.X.value[1]
+            return self.X.value[0], self.X.value[2]
         else:
             return 0, 0
 
@@ -163,7 +163,7 @@ def get_gammas(z, gp_model):
     return gamma1, gamma2, gamma3, gamma4, gamma5
 
 def compute_cost(gam1, gam2, gam4, v_des):
-    cost = np.array([[2 * gam1 * gam2 - 2 * gam2 * v_des.squeeze() + gam4, 0, 1]])
+    cost = np.array([[2 * gam1 * gam2 - 2 * gam2 * v_des.squeeze() + gam4, 0, 1.0]])
     return cost
 def compute_w(e_k, Ad, Bd, P, K):
     w = e_k.T @ (Ad - Bd @ K).T @ P @ Bd

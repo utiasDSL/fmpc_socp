@@ -49,15 +49,17 @@ class Experiment:
         np.savez(save_name, **self.results_dict)
         self.results_dict = munch.munchify(self.results_dict)
 
-    def plot_tracking(self, plot_dims=[0,1,2], fig_count=0, name=None):
+    def plot_tracking(self, plot_dims=[0,1,2], fig_count=0, con=False, name=None, size=(10,10), yrange=None):
         # Plot the states along the trajectory and compare with reference.
         fig_count += 1
         n_plots = len(plot_dims)
         units = {0: 'm', 1: 'm/s', 2: 'm/s^2'}
-        fig, ax = plt.subplots(n_plots, figsize=(10,10))
+        fig, ax = plt.subplots(n_plots, figsize=size)
         if n_plots == 1:
             ax = [ax]
         for plt_id in plot_dims:
+            if con:
+                ax[plt_id].axhline(y=con, color='r', linestyle='solid', label='Constraint')
             for ctrl_name, ctrl_data in self.results_dict.items():
                 if ctrl_data['infeasible']:
                     inf_ind = ctrl_data['infeasible_index']
@@ -68,11 +70,49 @@ class Experiment:
             ax[plt_id].plot(ctrl_data.t, ctrl_data.z_ref[:, plt_id], '--k', label='ref')
             y_label = f'$z_{plt_id}\; (' + units[plt_id] + ')$'
             ax[plt_id].set_ylabel(y_label)
+            if yrange:
+                ax[plt_id].set_ylim(yrange[plt_id])
         ax[-1].set_xlabel('Time (s)')
         plt.legend()
         plt.tight_layout()
         if name is None:
             plt_name = os.path.join(self.config.output_dir, 'tracking_plot.eps')
+        else:
+            plt_name = os.path.join(self.config.output_dir, name+'.eps')
+        plt.savefig(plt_name)
+        plt.show()
+        return fig_count
+
+
+    def plot_inputs(self, fig_count=0, name=None, units='rad'):
+        if units == 'rad':
+            coeff = 1.0
+        elif units == 'deg':
+            coeff = 180.0/np.pi
+
+        # Plot the states along the trajectory and compare with reference.
+        fig_count += 1
+        fig, ax = plt.subplots(figsize=(10,10))
+        if self.config.input_bound is not None:
+            ax.axhline(y=coeff*self.config.input_bound, color='r', linestyle='solid', label='Constraint')
+            ax.axhline(y=-coeff*self.config.input_bound, color='r', linestyle='solid')
+        for ctrl_name, ctrl_data in self.results_dict.items():
+            if ctrl_data['infeasible']:
+                inf_ind = ctrl_data['infeasible_index']
+                ax.plot(ctrl_data.t[:inf_ind], coeff*ctrl_data.u[:inf_ind], label=ctrl_name)
+                ax.plot(ctrl_data.t[inf_ind-1], coeff*ctrl_data.u[inf_ind-1], 'rX')
+            else:
+                ax.plot(ctrl_data.t[:-1], coeff*ctrl_data.u[:], label=ctrl_name)
+        if units == 'rad':
+            y_label = f'$u$ (rad)'
+        elif units == 'deg':
+            y_label = f'$u$ (deg)'
+        ax.set_ylabel(y_label)
+        ax.set_xlabel('Time (s)')
+        plt.legend()
+        plt.tight_layout()
+        if name is None:
+            plt_name = os.path.join(self.config.output_dir, 'input_plot.eps')
         else:
             plt_name = os.path.join(self.config.output_dir, name+'.eps')
         plt.savefig(plt_name)
@@ -123,6 +163,7 @@ def train_gp_v_from_u(config, quad_prior, quad):
     config.gp_v_from_u.output_dir = os.path.join(config.output_dir,'gp_v_from_u')
     mkdirs(config.gp_v_from_u.output_dir)
     seed = config.seed
+    np_rnd = np.random.default_rng(seed=seed)
     dt = config.dt
     T = config.T
     Amp = config.gp_v_from_u.amp
@@ -143,10 +184,11 @@ def train_gp_v_from_u(config, quad_prior, quad):
         v_hat = quad_prior.cs_v_from_u(z=z_ref, u=u_ref)['v'].toarray()
         u_ref_prior = quad_prior.cs_u_from_v(z=z_ref, v=v_hat)['u'].toarray()
 
-        noise = np.random.normal(0, sig, size=v_hat.shape)
+        noise = np_rnd.normal(0, sig, size=v_hat.shape)
         v_hat_noisy = v_real + noise
         inputs.append(torch.from_numpy(np.vstack((z_ref, u_ref))).double().T)
-        targets.append(torch.from_numpy(v_real).double().T)
+        #targets.append(torch.from_numpy(v_real).double().T)
+        targets.append(torch.from_numpy(v_hat_noisy).double().T)
     inputs = torch.vstack(inputs)
     targets = torch.vstack(targets)
 

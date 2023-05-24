@@ -64,6 +64,46 @@ def make_tracking_plot(track_dir, colors, save_name, labels=None, con=False, pap
         plt.savefig(plt_name)
     plt.show()
 
+
+def make_input_plot(track_dir, colors, save_name, labels=None, con=False, paper_dir=None, ctrls=None, fig_size=None):
+    data = get_data_dict(track_dir)
+    coeff = 180.0/np.pi
+    if fig_size is None:
+        fig_size = (5,3)
+
+    # Plot the states along the trajectory and compare with reference.
+    fig, ax = plt.subplots(figsize=fig_size)
+    plt_id = 0
+    alpha = 0.7
+    if con:
+        ax.axhline(y=con, color='k', linestyle='solid', label='Constraint')
+        ax.axhline(y=-con, color='k', linestyle='solid')
+    for ctrl_name, ctrl_data in data.items():
+        if ctrls is None or ctrl_name in ctrls:
+            if labels is None:
+                label = ctrl_name
+            else:
+                label = labels[ctrl_name]
+            common_plot_args = { 'label': label, 'color': colors[ctrl_name], 'alpha': alpha}
+            if ctrl_data['infeasible']:
+                #raise('Not supported')
+                inf_ind = ctrl_data['infeasible_index']
+                ax.plot(ctrl_data['t'][:inf_ind,:], coeff*ctrl_data['u'][:inf_ind, plt_id], **common_plot_args)
+                ax.plot(ctrl_data['t'][inf_ind-1,:], coeff*ctrl_data['u'][inf_ind-1, plt_id], 'rX', alpha=alpha)
+            else:
+                ax.plot(ctrl_data['t'][:-1,:], coeff*ctrl_data['u'][:, plt_id], **common_plot_args)
+    ax.set_ylabel('Input (deg)')
+    ax.set_xlabel('Time (s)')
+    ax.tick_params(labelsize=10)
+    plt.legend()
+    plt.tight_layout()
+    plt_name = os.path.join(track_dir, save_name )
+    plt.savefig(plt_name)
+    if paper_dir is not None:
+        plt_name = os.path.join(paper_dir, save_name )
+        plt.savefig(plt_name)
+    plt.show()
+
 if __name__ == "__main__":
 
     colors = {'MPC': 'purple',
@@ -98,3 +138,7 @@ if __name__ == "__main__":
     colors['DLQR'] = 'brown'
     labels['DLQR'] = 'DLQR Known'
     make_tracking_plot(input_con_step_dir, colors, input_con_step_name, labels=labels, con=None, paper_dir=paper_fig_dir)
+    chat_dir = '/home/ahall/Documents/UofT/code/fmpc_socp/experiements/results/response_1-8/saved/seed42_Apr-28-11-25-06_c12bb4c'
+    chat_name = 'chatter.pdf'
+    ctrls = ['DLQR+SOCP', 'FMPC+SOCP']
+    make_input_plot(chat_dir, colors, chat_name, labels=labels, con=30, paper_dir=paper_fig_dir)
