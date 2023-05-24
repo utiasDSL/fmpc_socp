@@ -36,3 +36,6 @@ python3 constrained_step_comparison.py
 ```
 
 All results will be put into `experiments/results/<experiment tag>`.
+
+## Citing
+TBD once published.
